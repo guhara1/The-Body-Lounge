@@ -352,6 +352,18 @@ p { margin: 0 0 var(--space-4); }
 .prose a { color: var(--color-accent-soft); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--color-gold-soft); }
 .prose a:hover { text-decoration-color: var(--color-accent); }
 
+/* Editorial byline (E-E-A-T authorship + freshness) */
+.byline {
+  display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center;
+  font-size: var(--fs-xs); color: var(--color-text-muted);
+  padding: 10px 14px; margin: 0 0 var(--space-6);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+.byline strong { color: var(--color-text-soft); }
+.byline a { color: var(--color-accent-soft); text-decoration: none; }
+
 /* Checklist */
 .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2); }
 .checklist li {

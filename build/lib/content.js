@@ -20,14 +20,28 @@ function tryLoad(name) {
   }
 }
 
+/* Per-slug shallow merge so multiple files can contribute different fields to
+   the same entity (e.g. base content in part1.js + `insight` in insight-a.js)
+   without one clobbering the other. */
+function mergeInto(target, src) {
+  for (const slug of Object.keys(src)) {
+    if (target[slug] && typeof target[slug] === "object" && typeof src[slug] === "object") {
+      target[slug] = { ...target[slug], ...src[slug] };
+    } else {
+      target[slug] = src[slug];
+    }
+  }
+}
+
 /* Merge a single <name>.js file plus every .js in a <name>/ directory so
    content authoring can be split across multiple files without conflicts. */
 function loadType(name) {
-  let merged = { ...tryLoad(name) };
+  const merged = {};
+  mergeInto(merged, tryLoad(name));
   const dir = path.join(__dirname, "..", "data", "content", name);
   try {
-    for (const f of fs.readdirSync(dir)) {
-      if (f.endsWith(".js")) Object.assign(merged, require(path.join(dir, f)));
+    for (const f of fs.readdirSync(dir).sort()) {
+      if (f.endsWith(".js")) mergeInto(merged, require(path.join(dir, f)));
     }
   } catch (e) {
     /* no directory — fine */

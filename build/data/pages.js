@@ -14,7 +14,7 @@ const {
   whwBlock,
   POLICY_NOTICE,
 } = require("../lib/layout");
-const { regionHero } = require("../lib/compose");
+const { regionHero, byline } = require("../lib/compose");
 const { priceSection } = require("../lib/pricing");
 
 const HOME = { name: "서울", href: "/" };
@@ -23,7 +23,7 @@ function descClamp(s) {
   return a.length <= 80 ? s : a.slice(0, 80).join("");
 }
 function proseWrap(inner) {
-  return `<section class="section--tight"><div class="container container--narrow"><div class="prose">${inner}</div></div></section>`;
+  return `<section class="section--tight"><div class="container container--narrow"><div class="prose">${byline()}${inner}</div></div></section>`;
 }
 function P(arr) {
   return arr.map((p) => `<p>${p}</p>`).join("");
@@ -82,6 +82,7 @@ function main() {
   ${heroImageBand("서울 출장마사지 지역·프로그램 안내")}
 
   <section class="section--tight"><div class="container container--narrow"><div class="prose">
+    ${byline()}
     <h2>서울 출장마사지, 지역과 프로그램을 함께 확인해야 합니다</h2>
     <p>서울은 25개 자치구와 400개가 넘는 행정동으로 이루어져 있지만, 실제 이용 기준은 행정구역만으로 정해지지 않습니다. 같은 강남구 안에서도 테헤란로 오피스 밀집지, 압구정·청담의 고급 상권, 역삼·논현의 오피스텔 벨트는 건물 출입 방식과 이동 동선이 서로 다릅니다. 잠실의 대단지 아파트, 여의도의 금융 사옥, 성수의 준공업 개조 건물, 홍대의 게스트하우스도 방문 전 확인해야 할 항목이 제각각입니다. <strong>간다GO</strong>는 이런 차이를 지역별·생활권별로 정리해, 방문 전 위치와 건물 유형, 예약 가능 시간, 이용하려는 관리 유형을 한 번에 확인할 수 있도록 안내합니다.</p>
     <p>마사지 프로그램도 목적에 따라 선택 기준이 다릅니다. 부드러운 릴렉스를 원하면 <a href="/seoul/program/swedish/">스웨디시</a>나 <a href="/seoul/program/aroma-therapy/">아로마테라피</a>, 근육 피로가 크면 <a href="/seoul/program/sports-massage/">스포츠 마사지</a>·<a href="/seoul/program/deep-tissue/">딥티슈</a>, 스트레칭 중심이면 <a href="/seoul/program/thai-massage/">타이마사지</a>, 장시간 보행 후에는 <a href="/seoul/program/foot-massage/">발마사지</a>가 기준이 됩니다. 오일 사용 여부와 압의 강도, 공간 확보가 필요한지도 예약 시 함께 확인하면 좋습니다.</p>

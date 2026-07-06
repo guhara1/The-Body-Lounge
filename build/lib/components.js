@@ -288,6 +288,10 @@ function webPageSchema(page) {
     isPartOf: { "@id": SITE.canonicalBase + "/#website" },
     primaryImageOfPage: img,
     image: img,
+    datePublished: SITE.reviewDate,
+    dateModified: SITE.reviewDate,
+    author: { "@id": SITE.canonicalBase + "/#organization", name: SITE.author },
+    reviewedBy: { "@id": SITE.canonicalBase + "/#organization" },
     publisher: { "@id": SITE.canonicalBase + "/#organization" },
   };
 }

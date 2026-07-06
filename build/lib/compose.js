@@ -9,6 +9,14 @@ const {
   POLICY_NOTICE,
 } = require("./layout");
 const { esc, heroImageBand } = require("./components");
+const { SITE } = require("./site");
+
+/* Editorial byline — E-E-A-T authorship + freshness signal. */
+function byline() {
+  return `<p class="byline">작성·검수 <strong>${esc(SITE.author)}</strong> · 마지막 확인 ${esc(
+    SITE.reviewDateText
+  )} · <a href="/seoul/about/">운영·검수 기준</a></p>`;
+}
 
 function paras(arr) {
   if (!arr) return "";
@@ -34,6 +42,7 @@ function composeRegion(c, related) {
 
   secs.push(`<section class="section section--tight"><div class="container container--narrow">`);
   secs.push(`<div class="prose">`);
+  secs.push(byline());
 
   secs.push(`<h2>이 지역의 생활권 특징</h2>${paras(c.lifeFeature)}`);
   secs.push(`<h2>가까운 역세권과 이동 기준</h2>${paras(c.access)}`);
@@ -48,6 +57,13 @@ function composeRegion(c, related) {
   if (c.programLinks) {
     secs.push(
       relatedChips(c.programLinks)
+    );
+  }
+
+  // Deeper, entity-specific guidance (information-gain pass). Optional field.
+  if (c.insight && c.insight.length) {
+    secs.push(
+      `<h2>${esc(c.insightHeading || "이 지역에서 자주 확인하는 점")}</h2>${paras(c.insight)}`
     );
   }
 
@@ -107,4 +123,4 @@ function regionHero(kicker, h1, lead, ctas) {
   ${heroImageBand(h1)}`;
 }
 
-module.exports = { composeRegion, regionHero, sectionHead, paras, bullets };
+module.exports = { composeRegion, regionHero, byline, sectionHead, paras, bullets };

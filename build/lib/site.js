@@ -18,6 +18,11 @@ const SITE = {
   },
   locale: "ko_KR",
   buildYear: 2026,
+  // Editorial / E-E-A-T signals. Swap `author` to a real operator name when
+  // available; reviewDate feeds the byline text and schema dateModified.
+  author: "간다GO 편집팀",
+  reviewDate: "2026-07-06",
+  reviewDateText: "2026년 7월 6일",
   // Default meta image (og / schema preferred thumbnail)
   ogImage: "/assets/img/og-cover.png",
   ogImageW: 1200,
