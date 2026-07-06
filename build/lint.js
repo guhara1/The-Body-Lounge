@@ -31,6 +31,9 @@ for (const f of htmlFiles) {
   const h = fs.readFileSync(f, "utf8");
   const rel = path.relative(ROOT, f);
 
+  // Redirect stubs (retired URLs) are intentionally minimal — skip checks.
+  if (/http-equiv="refresh"/.test(h)) continue;
+
   // description length
   const dm = h.match(/<meta name="description" content="([^"]*)"/);
   if (!dm) {

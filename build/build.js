@@ -10,7 +10,7 @@ const path = require("path");
 const { SITE } = require("./lib/site");
 const reg = require("./data/registry");
 const { maps } = reg;
-const { esc } = require("./lib/components");
+const { esc, abs } = require("./lib/components");
 const {
   renderPage,
   sectionHead,
@@ -256,7 +256,9 @@ reg.CHECK.forEach((c) => emit(pages.check(c)));
 emit(pages.contact());
 emit(pages.about());
 emit(pages.sitemapPage());
-write("/index.html", renderPage(pages.rootHub()));
+// The homepage now lives at "/" (pages.main). Keep the old /seoul/ URL working
+// by redirecting it to the root, canonicalised to "/".
+write("/seoul/", redirectHtml("/"));
 
 /* ================================================================== */
 /* robots.txt + XML sitemap                                            */
@@ -304,8 +306,20 @@ ${body}
 `;
 }
 
+/* Minimal HTML redirect page (canonicalised) for retired URLs. */
+function redirectHtml(target) {
+  const dest = abs(target); // full URL incl. origin + basePath
+  return `<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<title>${SITE.brand} 서울 출장마사지</title>
+<link rel="canonical" href="${dest}">
+<meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url=${dest}">
+</head><body>이 페이지는 <a href="${dest}">간다GO 메인</a>으로 이동합니다.</body></html>`;
+}
+
 function collectUrls() {
-  const u = ["/", "/seoul/"];
+  const u = ["/"];
   reg.AREAS.forEach((a) => u.push(`/seoul/area/${a.slug}/`));
   reg.GU.forEach((g) => u.push(`/seoul/${g.slug}/`));
   reg.LIFEZONES.forEach((l) => u.push(`/seoul/life/${l.slug}/`));

@@ -17,7 +17,7 @@ const {
 const { regionHero } = require("../lib/compose");
 const { priceSection } = require("../lib/pricing");
 
-const HOME = { name: "서울", href: "/seoul/" };
+const HOME = { name: "서울", href: "/" };
 function descClamp(s) {
   const a = [...s];
   return a.length <= 80 ? s : a.slice(0, 80).join("");
@@ -82,8 +82,15 @@ function main() {
   ${heroImageBand("서울 출장마사지 지역·프로그램 안내")}
 
   <section class="section--tight"><div class="container container--narrow"><div class="prose">
-    <h2>서울은 지역명과 프로그램을 함께 확인해야 합니다</h2>
-    <p>서울은 25개 자치구와 400개가 넘는 행정동으로 구성되어 있지만, 실제 이용 기준은 행정구역만으로 정해지지 않습니다. 강남역, 잠실, 홍대, 여의도, 성수처럼 생활권이 다르고, 스웨디시·아로마·타이마사지·스포츠 마사지처럼 프로그램별 확인사항도 다릅니다. 이 사이트는 지역별 안내와 프로그램별 안내를 함께 제공하여, 방문 전 위치와 건물 출입 방식, 이용하려는 관리 유형을 한 번에 확인할 수 있도록 정리했습니다.</p>
+    <h2>서울 출장마사지, 지역과 프로그램을 함께 확인해야 합니다</h2>
+    <p>서울은 25개 자치구와 400개가 넘는 행정동으로 이루어져 있지만, 실제 이용 기준은 행정구역만으로 정해지지 않습니다. 같은 강남구 안에서도 테헤란로 오피스 밀집지, 압구정·청담의 고급 상권, 역삼·논현의 오피스텔 벨트는 건물 출입 방식과 이동 동선이 서로 다릅니다. 잠실의 대단지 아파트, 여의도의 금융 사옥, 성수의 준공업 개조 건물, 홍대의 게스트하우스도 방문 전 확인해야 할 항목이 제각각입니다. <strong>간다GO</strong>는 이런 차이를 지역별·생활권별로 정리해, 방문 전 위치와 건물 유형, 예약 가능 시간, 이용하려는 관리 유형을 한 번에 확인할 수 있도록 안내합니다.</p>
+    <p>마사지 프로그램도 목적에 따라 선택 기준이 다릅니다. 부드러운 릴렉스를 원하면 <a href="/seoul/program/swedish/">스웨디시</a>나 <a href="/seoul/program/aroma-therapy/">아로마테라피</a>, 근육 피로가 크면 <a href="/seoul/program/sports-massage/">스포츠 마사지</a>·<a href="/seoul/program/deep-tissue/">딥티슈</a>, 스트레칭 중심이면 <a href="/seoul/program/thai-massage/">타이마사지</a>, 장시간 보행 후에는 <a href="/seoul/program/foot-massage/">발마사지</a>가 기준이 됩니다. 오일 사용 여부와 압의 강도, 공간 확보가 필요한지도 예약 시 함께 확인하면 좋습니다.</p>
+
+    <h2>서울 출장마사지 이용 가이드 — 예약 전 4단계</h2>
+    <p>처음 방문형 관리를 이용한다면 아래 순서로 확인하면 대기 없이 안내받을 수 있습니다. 첫째, <a href="/seoul/check/address/">방문 주소</a>를 도로명 기준으로 정확히 확인합니다. 둘째, 자택·<a href="/seoul/use/hotel/">호텔</a>·<a href="/seoul/use/officetel/">오피스텔</a>·<a href="/seoul/use/apartment/">아파트</a> 등 이용 장소에 따라 공동현관·엘리베이터·경비실 <a href="/seoul/check/building-access/">출입 방식</a>을 확인합니다. 셋째, 원하는 마사지 프로그램과 코스(60·90·120분)를 정합니다. 넷째, <a href="/seoul/check/time/">예약 가능 시간</a>과 <a href="/seoul/check/change-policy/">변경 기준</a>을 확인합니다. 야간 이용은 무조건 가능하다고 안내하지 않으며, 주소와 이동 거리, 건물 출입 조건을 확인한 뒤 안내됩니다.</p>
+
+    <h2>간다GO가 정보를 만드는 방식</h2>
+    <p>간다GO는 서울지역 방문형 웰니스 서비스의 <strong>예약 전 확인 정보</strong>를 정리하는 안내 사이트입니다. 서울시 자치구·행정동 구조와 주요 생활권, 역세권, 실제 예약 전 확인 항목을 바탕으로 페이지를 구성하고, 최종 문구는 사람이 검수해 중복·과장·허위 표현을 제거합니다. 실제 후기가 없는 별점·리뷰, 오프라인 매장이 없는 지역 표기, 사용자에게 보이지 않는 구조화 데이터는 사용하지 않습니다. 표시된 프로그램은 모두 관리 유형에 대한 안내이며, 불법·선정적 서비스는 제공하거나 암시하지 않습니다. 운영·검수 기준은 <a href="/seoul/about/">운영 기준</a> 페이지에서, 처리 정보는 <a href="/seoul/check/privacy/">개인정보 처리 기준</a>에서 확인할 수 있습니다.</p>
   </div></div></section>
 
   <section class="section--tight"><div class="container">
@@ -146,12 +153,12 @@ function main() {
   </div></div></section>`;
 
   return {
-    path: "/seoul/",
+    path: "/",
     title: "서울 출장마사지｜강남·잠실·홍대·여의도 홈타이·마사지 프로그램 안내",
     description: descClamp(
       "서울 출장마사지·홈타이 예약 전 강남·잠실·홍대·여의도 생활권과 스웨디시·아로마·타이 프로그램을 안내합니다."
     ),
-    breadcrumb: [HOME],
+    breadcrumb: null,
     faqs: mainFaqs,
     mobileBar: true,
     body,

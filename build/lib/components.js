@@ -18,7 +18,7 @@ function abs(path) {
 
 /* ---------- navigation config -------------------------------------- */
 const NAV = [
-  { label: "서울 홈", href: "/seoul/" },
+  { label: "서울 홈", href: "/" },
   {
     label: "권역별 안내",
     href: "/seoul/area/gangnam-southeast/",
@@ -119,7 +119,7 @@ function header() {
   return `
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="/seoul/" aria-label="${esc(SITE.brand)} 홈">
+      <a class="brand" href="/" aria-label="${esc(SITE.brand)} 홈">
         <span class="brand__mark">간</span><span>간다<span class="go">GO</span></span>
       </a>
       <nav aria-label="주요 메뉴">
@@ -146,7 +146,7 @@ function footer() {
     {
       h: "지역 안내",
       links: [
-        ["서울 메인", "/seoul/"],
+        ["서울 메인", "/"],
         ["강남·동남권", "/seoul/area/gangnam-southeast/"],
         ["서남권", "/seoul/area/southwest/"],
         ["서북권", "/seoul/area/northwest/"],
@@ -185,7 +185,7 @@ function footer() {
       </div>
       <div class="footer-grid">
         <div class="footer-brand">
-          <a class="brand" href="/seoul/"><span class="brand__mark">간</span><span>간다<span class="go">GO</span></span></a>
+          <a class="brand" href="/"><span class="brand__mark">간</span><span>간다<span class="go">GO</span></span></a>
           <p>서울 25개 구·주요 생활권과 스웨디시·아로마·타이·스포츠 마사지 프로그램의 예약 전 확인사항을 안내하는 정보 사이트입니다.</p>
           <div class="footer-contact">
             <div>상호: <strong>${esc(SITE.brand)}</strong></div>
