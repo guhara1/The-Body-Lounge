@@ -10,6 +10,8 @@ const path = require("path");
 const { maps } = require("../data/registry");
 const { PROFILES } = require("../data/profiles");
 
+const fs = require("fs");
+
 function tryLoad(name) {
   try {
     return require(path.join("..", "data", "content", name));
@@ -18,11 +20,26 @@ function tryLoad(name) {
   }
 }
 
+/* Merge a single <name>.js file plus every .js in a <name>/ directory so
+   content authoring can be split across multiple files without conflicts. */
+function loadType(name) {
+  let merged = { ...tryLoad(name) };
+  const dir = path.join(__dirname, "..", "data", "content", name);
+  try {
+    for (const f of fs.readdirSync(dir)) {
+      if (f.endsWith(".js")) Object.assign(merged, require(path.join(dir, f)));
+    }
+  } catch (e) {
+    /* no directory — fine */
+  }
+  return merged;
+}
+
 const authored = {
-  gu: tryLoad("districts"),
-  life: tryLoad("lifezones"),
-  station: tryLoad("stations"),
-  area: tryLoad("areas"),
+  gu: loadType("districts"),
+  life: loadType("lifezones"),
+  station: loadType("stations"),
+  area: loadType("areas"),
 };
 
 /* Build program-link chips for an entity from its recommended program slugs */
