@@ -16,6 +16,50 @@ const {
 } = require("../lib/layout");
 const { regionHero, byline } = require("../lib/compose");
 const { priceSection } = require("../lib/pricing");
+const { REVIEWS, RATING } = require("./reviews");
+
+/* Reviews section (homepage) + matching Review/AggregateRating schema. */
+function stars(n) {
+  return "★★★★★".slice(0, n) + "☆☆☆☆☆".slice(0, 5 - n);
+}
+function reviewsSection() {
+  const cards = REVIEWS.map(
+    (r) => `<figure class="review">
+      <div class="review__top"><span class="stars" aria-label="별점 ${r.rating}점">${stars(r.rating)}</span><span class="review__name">${esc(r.author)}</span></div>
+      <blockquote>${esc(r.body)}</blockquote>
+      <figcaption><span>${esc(r.title)}</span><time datetime="${r.date}">${r.date.replace(/-/g, ".")}</time></figcaption>
+    </figure>`
+  ).join("");
+  return `<section class="section--tight"><div class="container">
+    <div class="section-head">
+      <span class="eyebrow">고객 후기</span>
+      <h2>실제 이용 고객 후기</h2>
+      <p>평점 <strong class="text-accent">${RATING.avg}</strong> / 5 · 후기 ${RATING.count}건 · 예약 변경·연장·요청 대응 중심 후기입니다.</p>
+    </div>
+    <div class="review-grid">${cards}</div>
+  </div></section>`;
+}
+function reviewSchema() {
+  return {
+    "@type": "Organization",
+    "@id": SITE.origin + SITE.basePath + "/#organization",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: RATING.avg,
+      reviewCount: RATING.count,
+      bestRating: "5",
+      worstRating: "1",
+    },
+    review: REVIEWS.map((r) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: r.author },
+      datePublished: r.date,
+      name: r.title,
+      reviewBody: r.body,
+      reviewRating: { "@type": "Rating", ratingValue: String(r.rating), bestRating: "5", worstRating: "1" },
+    })),
+  };
+}
 
 const HOME = { name: "서울", href: "/" };
 function descClamp(s) {
@@ -138,6 +182,8 @@ function main() {
     ])}
   </div></section>
 
+  ${reviewsSection()}
+
   <section class="section--tight"><div class="container container--narrow">
     ${sectionHead("자주 묻는 질문", "서울 출장마사지 FAQ")}
     ${faqBlock(mainFaqs)}
@@ -161,6 +207,7 @@ function main() {
     ),
     breadcrumb: null,
     faqs: mainFaqs,
+    extraSchema: [reviewSchema()],
     mobileBar: true,
     body,
   };
