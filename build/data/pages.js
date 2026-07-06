@@ -40,16 +40,11 @@ function reviewsSection() {
   </div></section>`;
 }
 function reviewSchema() {
+  // aggregateRating lives on the site-wide Organization node; here we attach the
+  // full review list to the same @id (merged by consumers).
   return {
     "@type": "Organization",
     "@id": SITE.origin + SITE.basePath + "/#organization",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: RATING.avg,
-      reviewCount: RATING.count,
-      bestRating: "5",
-      worstRating: "1",
-    },
     review: REVIEWS.map((r) => ({
       "@type": "Review",
       author: { "@type": "Person", name: r.author },
@@ -163,6 +158,24 @@ function main() {
   <section class="section--tight"><div class="container">
     ${sectionHead("이용 장소", "이용 장소별 확인 기준")}
     ${linkCards(useCards)}
+  </div></section>
+
+  <section class="section--tight"><div class="container container--narrow">
+    ${sectionHead("주제별 안내", "지역·프로그램별 자주 찾는 안내", "지역과 마사지 프로그램·이용 장소를 함께 찾는 분들이 많이 보는 안내입니다.")}
+    <ul class="linklist">
+      <li><a href="/seoul/gangnam-gu/">강남구 오피스텔 출장마사지 이용 기준<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/jamsil-songpa/">잠실·송파 호텔 출장마사지 방문 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/hongdae-hapjeong/">홍대·합정 스웨디시 예약 전 확인<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/yeouido-yeongdeungpo/">여의도·영등포 스포츠 마사지 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/gangnam-yeoksam/">강남역·역삼 아로마테라피 예약 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/seongsu-wangsimni/">성수·왕십리 딥티슈 이용 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/myeongdong-euljiro/">명동·을지로 발마사지 관광 숙소 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/nowon-sanggye/">노원·상계 타이마사지 아파트 방문 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/magok-balsan/">마곡·발산 업무지구 출장마사지 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/yongsan-seoul-station/">용산·서울역 호텔 출장마사지 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/gudi-gadi/">구디·가디 야간 예약 가능 시간 안내<span aria-hidden="true"> →</span></a></li>
+      <li><a href="/seoul/life/cheongdam-apgujeong/">청담·압구정 커플 관리 예약 안내<span aria-hidden="true"> →</span></a></li>
+    </ul>
   </div></section>
 
   ${priceSection()}

@@ -250,17 +250,27 @@ function breadcrumb(trail) {
 }
 
 /* ---------- JSON-LD schema builders -------------------------------- */
+const { RATING } = require("../data/reviews");
+
 function organizationSchema() {
   return {
     "@type": "Organization",
     "@id": SITE.canonicalBase + "/#organization",
     name: SITE.brand,
     alternateName: SITE.brandLatin,
-    url: SITE.canonicalBase + "/seoul/",
+    url: SITE.canonicalBase + "/",
     telephone: SITE.phone,
     image: abs(SITE.ogImage),
     logo: abs(SITE.ogImage),
     areaServed: { "@type": "City", name: "서울특별시" },
+    // Site-wide aggregate score (full review list is emitted on the homepage).
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: RATING.avg,
+      reviewCount: RATING.count,
+      bestRating: "5",
+      worstRating: "1",
+    },
     contactPoint: {
       "@type": "ContactPoint",
       telephone: SITE.phone,

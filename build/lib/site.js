@@ -23,6 +23,8 @@ const SITE = {
   author: "간다GO 편집팀",
   reviewDate: "2026-07-06",
   reviewDateText: "2026년 7월 6일",
+  // Search-console site verification
+  naverVerification: "a8108a965402cbbf2d3caf831d7119010ad49bb1",
   // Default meta image (og / schema preferred thumbnail)
   ogImage: "/assets/img/og-cover.png",
   ogImageW: 1200,

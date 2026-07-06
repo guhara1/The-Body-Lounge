@@ -79,7 +79,10 @@ function renderPage(page) {
 <meta name="twitter:description" content="${esc(page.description)}">
 <meta name="twitter:image" content="${ogImg}">
 <meta name="theme-color" content="#0a0e18">
+${SITE.naverVerification ? `<meta name="naver-site-verification" content="${SITE.naverVerification}">` : ""}
+${SITE.googleVerification ? `<meta name="google-site-verification" content="${SITE.googleVerification}">` : ""}
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title="${esc(SITE.brand)} 업데이트" href="/rss.xml">
 <link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/components.css">
 <script type="application/ld+json">${schema}</script>

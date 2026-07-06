@@ -54,9 +54,27 @@ function emit(page) {
 }
 
 /* ---------- breadcrumb helper -------------------------------------- */
-const HOME = { name: "서울", href: "/seoul/" };
+const HOME = { name: "서울", href: "/" };
 function bc(...rest) {
   return [HOME, ...rest];
+}
+
+/* Long-tail internal links: descriptive anchors combining the region name with
+   programs, venues and checks — strengthens the internal-link graph. */
+function longtailFor(name, areaSlug, areaName, programLinks) {
+  const progs = (programLinks || []).slice(0, 3).map((p) => ({
+    name: `${name} ${p.name} 예약 전 확인`,
+    href: p.href,
+  }));
+  const items = [
+    ...progs,
+    { name: `${name} 오피스텔 출장마사지 이용 기준`, href: "/seoul/use/officetel/" },
+    { name: `${name} 호텔·숙소 방문 정책 확인`, href: "/seoul/use/hotel/" },
+    { name: `${name} 아파트·자택 방문 출입 기준`, href: "/seoul/use/apartment/" },
+    { name: `${name} 야간 예약 가능 시간 확인`, href: "/seoul/check/time/" },
+  ];
+  if (areaSlug) items.push({ name: `${areaName} 권역 전체 안내`, href: `/seoul/area/${areaSlug}/` });
+  return items;
 }
 
 /* ================================================================== */
@@ -110,7 +128,7 @@ reg.AREAS.forEach((area) => {
     body:
       intro +
       priceSection({ heading: `${area.name} 이용 코스와 요금` }) +
-      composeRegion(content, related),
+      composeRegion(content, related, longtailFor(area.name, null, area.name, content.programLinks)),
   });
 });
 
@@ -152,7 +170,11 @@ reg.GU.forEach((gu) => {
         ]
       ) +
       priceSection({ heading: `${gu.name} 이용 코스와 요금` }) +
-      composeRegion(content, [...relLifes, ...sibling]),
+      composeRegion(
+        content,
+        [...relLifes, ...sibling],
+        longtailFor(gu.name, gu.area, area.name, content.programLinks)
+      ),
   });
 });
 
@@ -195,7 +217,11 @@ reg.LIFEZONES.forEach((life) => {
         ]
       ) +
       priceSection({ heading: `${life.name} 이용 코스와 요금` }) +
-      composeRegion(content, [...stations, ...relLifes]),
+      composeRegion(
+        content,
+        [...stations, ...relLifes],
+        longtailFor(life.name, life.area, area.name, content.programLinks)
+      ),
   });
 });
 
@@ -238,7 +264,11 @@ reg.STATIONS.forEach((st) => {
         ]
       ) +
       priceSection({ heading: `${st.name} 이용 코스와 요금` }) +
-      composeRegion(content, related),
+      composeRegion(
+        content,
+        related,
+        longtailFor(st.name, life.area, area.name, content.programLinks)
+      ),
   });
 });
 
@@ -288,26 +318,92 @@ function descClamp(s) {
 
 function buildRobotsAndSitemap() {
   const urls = collectUrls();
-  const robots = `User-agent: *
+  // Explicitly welcome Google, Naver(Yeti), Bing; point them at the sitemap.
+  const robots = `# 간다GO robots.txt
+User-agent: *
 Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 Sitemap: ${SITE.canonicalBase}/sitemap.xml
 `;
   fs.writeFileSync(path.join(OUT, "robots.txt"), robots);
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), sitemapXml(urls));
+  fs.writeFileSync(path.join(OUT, "rss.xml"), rssXml(urls));
 }
 
 function sitemapXml(urls) {
+  const lastmod = SITE.reviewDate;
   const body = urls
-    .map(
-      (u) =>
-        `  <url><loc>${SITE.canonicalBase}${u}</loc><changefreq>weekly</changefreq></url>`
-    )
+    .map((u) => {
+      const priority = u === "/" ? "1.0" : u.split("/").length <= 3 ? "0.8" : "0.6";
+      const freq = u === "/" ? "daily" : "weekly";
+      return `  <url><loc>${SITE.canonicalBase}${u}</loc><lastmod>${lastmod}</lastmod><changefreq>${freq}</changefreq><priority>${priority}</priority></url>`;
+    })
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${body}
 </urlset>
 `;
+}
+
+/* RSS 2.0 feed — supplementary discovery channel for Naver/Google. */
+function rssXml(urls) {
+  const pub = new Date(SITE.reviewDate + "T00:00:00+09:00").toUTCString();
+  const items = urls
+    .map(
+      (u) =>
+        `    <item>
+      <title>${xmlEsc(labelForUrl(u))}</title>
+      <link>${SITE.canonicalBase}${u}</link>
+      <guid isPermaLink="true">${SITE.canonicalBase}${u}</guid>
+      <pubDate>${pub}</pubDate>
+    </item>`
+    )
+    .join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${xmlEsc(SITE.brand)} — 서울 출장마사지 지역·프로그램 안내</title>
+    <link>${SITE.canonicalBase}/</link>
+    <atom:link href="${SITE.canonicalBase}/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>서울 25개 구·생활권·역세권과 마사지 프로그램 예약 전 확인 안내</description>
+    <language>ko</language>
+    <lastBuildDate>${pub}</lastBuildDate>
+${items}
+  </channel>
+</rss>
+`;
+}
+
+function xmlEsc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function labelForUrl(u) {
+  if (u === "/") return `${SITE.brand} 서울 출장마사지 메인`;
+  for (const a of reg.AREAS) if (u === `/seoul/area/${a.slug}/`) return `${a.name} 출장마사지 안내`;
+  for (const g of reg.GU) if (u === `/seoul/${g.slug}/`) return `${g.name} 출장마사지 안내`;
+  for (const l of reg.LIFEZONES) if (u === `/seoul/life/${l.slug}/`) return `${l.name} 출장마사지 안내`;
+  for (const s of reg.STATIONS) if (u === `/seoul/station/${s.slug}/`) return `${s.name} 출장마사지 안내`;
+  for (const p of reg.PROGRAMS) if (u === `/seoul/program/${p.slug}/`) return `서울 ${p.name} 안내`;
+  for (const x of reg.USE) if (u === `/seoul/use/${x.slug}/`) return x.h1;
+  for (const c of reg.CHECK) if (u === `/seoul/check/${c.slug}/`) return `${c.h1}`;
+  if (u === "/seoul/program/") return "서울 마사지 프로그램 안내";
+  if (u === "/seoul/contact/") return "문의하기";
+  if (u === "/seoul/about/") return "운영 기준";
+  if (u === "/seoul/sitemap/") return "사이트맵";
+  return u;
 }
 
 /* Minimal HTML redirect page (canonicalised) for retired URLs. */

@@ -35,9 +35,17 @@ const PRIVACY_BODY =
 const SERVICE_BODY =
   '이 사이트는 방문형 웰니스 정보 안내를 목적으로 하며, 불법·선정적 서비스는 제공하거나 암시하지 않습니다. 이용 기준은 <a href="/seoul/check/service-policy/">불법·선정적 서비스 불가 안내</a> 페이지에 정리되어 있습니다.';
 
+/* Long-tail internal-link list (descriptive anchors combining region + topic). */
+function longtailBlock(items) {
+  return `<ul class="linklist">${items
+    .map((i) => `<li><a href="${i.href}">${esc(i.name)}<span aria-hidden="true"> →</span></a></li>`)
+    .join("")}</ul>`;
+}
+
 /* Compose a region-style article body (area / district / lifezone / station).
-   `c` is the authored content object. `related` is a list of {name,href}. */
-function composeRegion(c, related) {
+   `c` is the authored content object. `related` is a list of {name,href}.
+   `longtail` is a list of {name,href} long-tail internal links. */
+function composeRegion(c, related, longtail) {
   const secs = [];
 
   secs.push(`<section class="section section--tight"><div class="container container--narrow">`);
@@ -81,6 +89,10 @@ function composeRegion(c, related) {
   secs.push(
     `<h2>참고 자료</h2><p>지역·행정 구조는 <a href="https://www.seoul.go.kr/" target="_blank" rel="noopener nofollow">서울특별시 공식 홈페이지</a>와 해당 자치구 홈페이지를, 지하철 이동 정보는 <a href="https://www.seoulmetro.co.kr/" target="_blank" rel="noopener nofollow">서울교통공사</a> 안내를 참고해 정리했습니다. 실제 방문 가능 여부와 건물 출입 방식은 예약 시 최종 확인됩니다.</p>`
   );
+
+  if (longtail && longtail.length) {
+    secs.push(`<h2>이런 주제로도 함께 확인하세요</h2>${longtailBlock(longtail)}`);
+  }
 
   if (related && related.length) {
     secs.push(`<h2>관련 지역 보기</h2>${relatedChips(related)}`);

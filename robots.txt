@@ -1,3 +1,17 @@
+# 간다GO robots.txt
 User-agent: *
 Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 Sitemap: https://the-body-lounge.pages.dev/sitemap.xml
