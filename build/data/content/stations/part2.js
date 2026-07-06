@@ -68,7 +68,7 @@ module.exports = {
       `사당은 업무지구라기보다 통근 환승 인구가 중심이라, 이동 도중이나 귀가 전 잠시 이용하는 문의가 많습니다. 방면과 이용 위치에 따라 출입 방식이 달라지므로, 예약 가능 시간을 미리 확인하면 대기 없이 안내받을 수 있습니다. 세부 이용 기준은 <a href="/seoul/use/home/">자택 이용 안내</a>를 참고하세요.`,
     ],
     programGuide: [
-      `장시간 통근으로 쌓인 피로를 풀려는 이용이 많아 <a href="/seoul/program/swedish/">스웨디시</a> 문의가 잦고, 다리 붓기나 발 피로가 심하면 <a href="/seoul/program/foot-massage/">발 마사지</a>, 어깨·허리 근육 뭉침이 두드러지면 <a href="/seoul/program/deep-tissue/">딥티슈</a>가 선택 기준이 됩니다.`,
+      `장시간 통근으로 쌓인 피로를 풀려는 이용이 많아 <a href="/seoul/program/swedish/">스웨디시</a> 문의가 잦고, 다리 붓기나 발 피로가 심하면 <a href="/seoul/program/foot-massage/">발 마사지</a>, 어깨·허리 근육 뭉침이 두드러지면 <a href="/seoul/program/deep-tissue/">딥티슈</a>가 선택 기준이 됩니다. 이동 중 잠시 이용하는 경우가 많아, 예약 시 가능한 시간과 원하는 부위를 함께 알려 주면 남은 일정에 맞춰 안내받을 수 있습니다.`,
     ],
     programLinks: [
       { name: `스웨디시`, href: `/seoul/program/swedish/` },
