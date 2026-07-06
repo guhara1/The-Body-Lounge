@@ -7,8 +7,8 @@ const SITE = {
   brand: "간다GO",
   brandLatin: "GandaGO",
   tagline: "서울 출장마사지 지역·프로그램 안내",
-  // Canonical origin (update to the live domain when deployed)
-  origin: "https://www.ganda-go.com",
+  // Canonical origin — live Cloudflare Pages domain (served at root).
+  origin: "https://the-body-lounge.pages.dev",
   phone: "0508-202-4719",
   phoneHref: "tel:0508-202-4719",
   // Telegram inquiry links (웹사이트 제작문의 / 제휴문의)

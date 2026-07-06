@@ -27,6 +27,9 @@ for (const f of htmlFiles) {
   routes.add(rel);
 }
 
+const titleMap = {};
+const descMap = {};
+
 for (const f of htmlFiles) {
   const h = fs.readFileSync(f, "utf8");
   const rel = path.relative(ROOT, f);
@@ -34,20 +37,26 @@ for (const f of htmlFiles) {
   // Redirect stubs (retired URLs) are intentionally minimal — skip checks.
   if (/http-equiv="refresh"/.test(h)) continue;
 
-  // description length
+  // description length + uniqueness collection
   const dm = h.match(/<meta name="description" content="([^"]*)"/);
   if (!dm) {
     console.error(`✗ ${rel}: missing meta description`);
     errors++;
-  } else if ([...dm[1]].length > 80) {
-    console.error(`✗ ${rel}: description ${[...dm[1]].length} chars > 80`);
-    errors++;
+  } else {
+    if ([...dm[1]].length > 80) {
+      console.error(`✗ ${rel}: description ${[...dm[1]].length} chars > 80`);
+      errors++;
+    }
+    (descMap[dm[1]] = descMap[dm[1]] || []).push(rel);
   }
 
-  // title present
-  if (!/<title>[^<]+<\/title>/.test(h)) {
+  // title present + uniqueness collection
+  const tm = h.match(/<title>([^<]+)<\/title>/);
+  if (!tm) {
     console.error(`✗ ${rel}: missing/empty title`);
     errors++;
+  } else {
+    (titleMap[tm[1]] = titleMap[tm[1]] || []).push(rel);
   }
 
   // JSON-LD parse
@@ -94,6 +103,20 @@ for (const f of htmlFiles) {
       console.warn(`⚠ ${rel}: article text ${[...text].length} chars (aim ≥ 2000 body)`);
       warns++;
     }
+  }
+}
+
+// Duplicate title / description across pages (doorway / duplicate-content risk)
+for (const [t, list] of Object.entries(titleMap)) {
+  if (list.length > 1) {
+    console.error(`✗ duplicate <title> on ${list.length} pages: "${t}"\n    ${list.join(", ")}`);
+    errors++;
+  }
+}
+for (const [d, list] of Object.entries(descMap)) {
+  if (list.length > 1) {
+    console.error(`✗ duplicate description on ${list.length} pages: "${d.slice(0, 40)}…"\n    ${list.join(", ")}`);
+    errors++;
   }
 }
 

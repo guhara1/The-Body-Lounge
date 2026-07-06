@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.ganda-go.com/sitemap.xml
+Sitemap: https://the-body-lounge.pages.dev/sitemap.xml

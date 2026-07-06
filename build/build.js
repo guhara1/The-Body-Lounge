@@ -100,9 +100,10 @@ reg.AREAS.forEach((area) => {
 
   emit({
     path: `/seoul/area/${area.slug}/`,
-    title: `서울 ${area.name} 출장마사지｜자치구·생활권·마사지 프로그램 안내`,
+    title: content.seoTitle || `서울 ${area.name} 출장마사지｜자치구·생활권·마사지 프로그램 안내`,
     description: descClamp(
-      `서울 ${area.name} 출장마사지·홈타이 예약 전 자치구, 생활권, 역세권과 마사지 프로그램 이용 기준을 안내합니다.`
+      content.seoDesc ||
+        `서울 ${area.name} 출장마사지·홈타이 예약 전 자치구, 생활권, 역세권과 마사지 프로그램 이용 기준을 안내합니다.`
     ),
     breadcrumb: bc({ name: area.name, href: `/seoul/area/${area.slug}/` }),
     faqs: content.faqs,
@@ -130,9 +131,10 @@ reg.GU.forEach((gu) => {
 
   emit({
     path: `/seoul/${gu.slug}/`,
-    title: `${gu.name} 출장마사지｜생활권·역세권·마사지 프로그램 예약 전 안내`,
+    title: content.seoTitle || `${gu.name} 출장마사지｜생활권·역세권·마사지 프로그램 예약 전 안내`,
     description: descClamp(
-      `서울 ${gu.name} 출장마사지·홈타이 예약 전 생활권, 역세권, 호텔·오피스텔·아파트 이용 기준과 프로그램을 안내합니다.`
+      content.seoDesc ||
+        `서울 ${gu.name} 출장마사지·홈타이 예약 전 생활권, 역세권, 호텔·오피스텔·아파트 이용 기준과 프로그램을 안내합니다.`
     ),
     breadcrumb: bc(
       { name: area.name, href: `/seoul/area/${area.slug}/` },
@@ -172,9 +174,10 @@ reg.LIFEZONES.forEach((life) => {
 
   emit({
     path: `/seoul/life/${life.slug}/`,
-    title: `${life.name} 출장마사지｜생활권 이용 기준·마사지 프로그램 안내`,
+    title: content.seoTitle || `${life.name} 출장마사지｜생활권 이용 기준·마사지 프로그램 안내`,
     description: descClamp(
-      `서울 ${life.name} 생활권 출장마사지 예약 전 역세권, 숙소·오피스텔·아파트 이용 기준과 마사지 프로그램을 안내합니다.`
+      content.seoDesc ||
+        `서울 ${life.name} 생활권 출장마사지 예약 전 역세권, 숙소·오피스텔·아파트 이용 기준과 마사지 프로그램을 안내합니다.`
     ),
     breadcrumb: bc(
       { name: area.name, href: `/seoul/area/${area.slug}/` },
@@ -213,9 +216,10 @@ reg.STATIONS.forEach((st) => {
 
   emit({
     path: `/seoul/station/${st.slug}/`,
-    title: `${st.name} 출장마사지｜역세권 이동·이용 장소 예약 전 안내`,
+    title: content.seoTitle || `${st.name} 출장마사지｜역세권 이동·이용 장소 예약 전 안내`,
     description: descClamp(
-      `서울 ${st.name} 역세권 출장마사지 예약 전 이동 기준, 숙소·오피스텔·업무지구 이용 확인사항을 안내합니다.`
+      content.seoDesc ||
+        `서울 ${st.name} 역세권 출장마사지 예약 전 이동 기준, 숙소·오피스텔·업무지구 이용 확인사항을 안내합니다.`
     ),
     breadcrumb: bc(
       { name: area.name, href: `/seoul/area/${area.slug}/` },
