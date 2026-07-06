@@ -107,10 +107,10 @@ module.exports = {
       `신림 배후 주거지에는 아파트와 빌라가 섞여 있어, 단지형은 방문 차량 등록과 공동현관 호출 절차를 확인해야 합니다. <a href="/seoul/check/apartment-access/">아파트 출입 기준</a>을 예약 전에 살펴보면 단지 진입이 수월합니다.`,
     ],
     business: [
-      `업무지구보다 대학가·1인 가구 자택 이용이 중심이라, 자택 위치와 원룸 건물의 출입 절차 확인이 핵심입니다. 이용 위치가 원룸인지 소형 오피스텔인지에 따라 안내가 달라지므로 <a href="/seoul/use/home/">자택 이용 안내</a>를 참고하면 좋습니다.`,
+      `업무지구보다 대학가·1인 가구 자택 이용이 중심이라, 자택 위치와 원룸 건물의 출입 절차 확인이 핵심입니다. 이용 위치가 원룸인지 소형 오피스텔인지에 따라 안내가 달라지므로 <a href="/seoul/use/home/">자택 이용 안내</a>를 참고하면 좋습니다. 관악구 생활권 특성상 늦은 시간 귀가 후 이용 문의가 있으나 원룸 건물은 공동현관 개방 시간이 정해진 곳이 있어, 예약 전에 <a href="/seoul/check/night-access/">야간 출입 확인</a>을 함께 살펴보면 방문이 매끄럽습니다.`,
     ],
     programGuide: [
-      `학업·업무로 어깨와 목이 뭉친 젊은 이용층이 많아 <a href="/seoul/program/swedish/">스웨디시</a>·<a href="/seoul/program/aroma-therapy/">아로마테라피</a> 문의가 잦고, 오래 앉아 생긴 뭉침이 심하면 <a href="/seoul/program/deep-tissue/">딥티슈</a>가 선택 기준이 됩니다.`,
+      `학업·업무로 어깨와 목이 뭉친 젊은 이용층이 많아 <a href="/seoul/program/swedish/">스웨디시</a>·<a href="/seoul/program/aroma-therapy/">아로마테라피</a> 문의가 잦고, 오래 앉아 생긴 뭉침이 심하면 <a href="/seoul/program/deep-tissue/">딥티슈</a>가 선택 기준이 됩니다. 좁은 원룸 공간에서는 준비 방식이 달라질 수 있어 예약 시 공간 조건을 함께 알려 주면 안내가 정확하며, 이용 시간에 맞춰 프로그램을 고르면 부담이 적습니다.`,
     ],
     programLinks: [
       { name: `스웨디시`, href: `/seoul/program/swedish/` },
