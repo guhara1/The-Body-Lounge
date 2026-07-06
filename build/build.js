@@ -25,8 +25,19 @@ const { priceSection } = require("./lib/pricing");
 const { getRegionContent } = require("./lib/content");
 const pages = require("./data/pages");
 
-const OUT = path.resolve(__dirname, "..");
+const REPO_ROOT = path.resolve(__dirname, "..");
+// OUT_DIR lets CI build a clean artifact dir (assets copied in); default = repo root.
+const OUT = process.env.OUT_DIR ? path.resolve(process.env.OUT_DIR) : REPO_ROOT;
 let written = 0;
+
+function withBasePath(html) {
+  const bp = SITE.basePath;
+  if (!bp) return html;
+  // Prefix every in-page root-absolute href/src (starting with a single "/")
+  // with the deploy sub-path. Protocol-relative (//) and full URLs are left
+  // untouched; canonical/og/schema URLs are already absolute (http...).
+  return html.replace(/\b(href|src)="\/(?!\/)/g, `$1="${bp}/`);
+}
 
 function write(routePath, html) {
   // routePath like "/seoul/gangnam-gu/" -> seoul/gangnam-gu/index.html
@@ -34,7 +45,7 @@ function write(routePath, html) {
   if (rel === "" || rel.endsWith("/")) rel += "index.html";
   const abs = path.join(OUT, rel);
   fs.mkdirSync(path.dirname(abs), { recursive: true });
-  fs.writeFileSync(abs, html);
+  fs.writeFileSync(abs, withBasePath(html));
   written++;
 }
 
@@ -252,6 +263,13 @@ write("/index.html", renderPage(pages.rootHub()));
 /* ================================================================== */
 buildRobotsAndSitemap();
 
+// When building into a separate artifact dir, bring the static assets along
+// and drop a .nojekyll so GitHub Pages serves files verbatim.
+if (OUT !== REPO_ROOT) {
+  fs.cpSync(path.join(REPO_ROOT, "assets"), path.join(OUT, "assets"), { recursive: true });
+  fs.writeFileSync(path.join(OUT, ".nojekyll"), "");
+}
+
 console.log(`\n✅ ${written} pages written to ${OUT}`);
 
 /* ---------- utilities ---------------------------------------------- */
@@ -266,7 +284,7 @@ function buildRobotsAndSitemap() {
   const urls = collectUrls();
   const robots = `User-agent: *
 Allow: /
-Sitemap: ${SITE.origin}/sitemap.xml
+Sitemap: ${SITE.canonicalBase}/sitemap.xml
 `;
   fs.writeFileSync(path.join(OUT, "robots.txt"), robots);
   fs.writeFileSync(path.join(OUT, "sitemap.xml"), sitemapXml(urls));
@@ -276,7 +294,7 @@ function sitemapXml(urls) {
   const body = urls
     .map(
       (u) =>
-        `  <url><loc>${SITE.origin}${u}</loc><changefreq>weekly</changefreq></url>`
+        `  <url><loc>${SITE.canonicalBase}${u}</loc><changefreq>weekly</changefreq></url>`
     )
     .join("\n");
   return `<?xml version="1.0" encoding="UTF-8"?>

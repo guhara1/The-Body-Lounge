@@ -28,4 +28,13 @@ const SITE = {
   heroImageAlt: "간다GO 서울 출장마사지 안내",
 };
 
+/* Deploy-time overrides (set by CI for GitHub Pages, etc.):
+   - SITE_ORIGIN : scheme+host, e.g. https://guhara1.github.io
+   - BASE_PATH   : sub-path prefix, e.g. /The-Body-Lounge (project Pages) or "" (root/custom domain)
+   canonicalBase = origin + basePath and is used for canonical/og/schema/sitemap
+   URLs; basePath is also prefixed onto every in-page root-absolute href/src. */
+if (process.env.SITE_ORIGIN) SITE.origin = process.env.SITE_ORIGIN;
+SITE.basePath = (process.env.BASE_PATH || "").replace(/\/$/, "");
+SITE.canonicalBase = SITE.origin + SITE.basePath;
+
 module.exports = { SITE };

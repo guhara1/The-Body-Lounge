@@ -13,7 +13,7 @@ function esc(s) {
 }
 function abs(path) {
   if (/^https?:/.test(path)) return path;
-  return SITE.origin + (path.startsWith("/") ? path : "/" + path);
+  return SITE.canonicalBase + (path.startsWith("/") ? path : "/" + path);
 }
 
 /* ---------- navigation config -------------------------------------- */
@@ -253,10 +253,10 @@ function breadcrumb(trail) {
 function organizationSchema() {
   return {
     "@type": "Organization",
-    "@id": SITE.origin + "/#organization",
+    "@id": SITE.canonicalBase + "/#organization",
     name: SITE.brand,
     alternateName: SITE.brandLatin,
-    url: SITE.origin + "/seoul/",
+    url: SITE.canonicalBase + "/seoul/",
     telephone: SITE.phone,
     image: abs(SITE.ogImage),
     logo: abs(SITE.ogImage),
@@ -285,21 +285,21 @@ function webPageSchema(page) {
     name: page.title,
     description: page.description,
     inLanguage: "ko",
-    isPartOf: { "@id": SITE.origin + "/#website" },
+    isPartOf: { "@id": SITE.canonicalBase + "/#website" },
     primaryImageOfPage: img,
     image: img,
-    publisher: { "@id": SITE.origin + "/#organization" },
+    publisher: { "@id": SITE.canonicalBase + "/#organization" },
   };
 }
 
 function websiteSchema() {
   return {
     "@type": "WebSite",
-    "@id": SITE.origin + "/#website",
-    url: SITE.origin + "/seoul/",
+    "@id": SITE.canonicalBase + "/#website",
+    url: SITE.canonicalBase + "/seoul/",
     name: SITE.brand,
     inLanguage: "ko",
-    publisher: { "@id": SITE.origin + "/#organization" },
+    publisher: { "@id": SITE.canonicalBase + "/#organization" },
   };
 }
 
