@@ -202,6 +202,22 @@ function footer() {
   </footer>`;
 }
 
+/* ---------- 16:9 hero image band (below the hero box) -------------- */
+/* Renders a 16:9 banner. Until the image is uploaded to SITE.heroImage the
+   <img> onerror hides itself, revealing the branded placeholder behind it,
+   so a missing file never shows a broken-image icon. */
+function heroImageBand(alt) {
+  const src = SITE.heroImage;
+  if (!src) return "";
+  const a = esc(alt || SITE.heroImageAlt || SITE.brand);
+  return `<section class="hero-media-wrap" aria-label="대표 이미지"><div class="container">
+    <figure class="hero-media">
+      <img src="${src}" alt="${a}" width="1280" height="720" loading="eager" decoding="async"
+        onerror="this.style.display='none';this.parentNode.classList.add('is-empty')">
+    </figure>
+  </div></section>`;
+}
+
 /* ---------- floating call button (mobile, all pages) --------------- */
 function floatingCall() {
   return `<a class="float-call" href="${SITE.phoneHref}" aria-label="전화 예약 ${esc(
@@ -318,6 +334,7 @@ module.exports = {
   NAV,
   header,
   footer,
+  heroImageBand,
   floatingCall,
   mobileBar,
   breadcrumb,

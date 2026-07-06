@@ -21,6 +21,7 @@ const {
   POLICY_NOTICE,
 } = require("./lib/layout");
 const { composeRegion, regionHero } = require("./lib/compose");
+const { priceSection } = require("./lib/pricing");
 const { getRegionContent } = require("./lib/content");
 const pages = require("./data/pages");
 
@@ -94,7 +95,10 @@ reg.AREAS.forEach((area) => {
     ),
     breadcrumb: bc({ name: area.name, href: `/seoul/area/${area.slug}/` }),
     faqs: content.faqs,
-    body: intro + composeRegion(content, related),
+    body:
+      intro +
+      priceSection({ heading: `${area.name} 이용 코스와 요금` }) +
+      composeRegion(content, related),
   });
 });
 
@@ -133,7 +137,9 @@ reg.GU.forEach((gu) => {
           { label: "마사지 프로그램", href: "/seoul/program/", accent: true },
           { label: `${area.name} 전체`, href: `/seoul/area/${area.slug}/` },
         ]
-      ) + composeRegion(content, [...relLifes, ...sibling]),
+      ) +
+      priceSection({ heading: `${gu.name} 이용 코스와 요금` }) +
+      composeRegion(content, [...relLifes, ...sibling]),
   });
 });
 
@@ -173,7 +179,9 @@ reg.LIFEZONES.forEach((life) => {
           { label: "마사지 프로그램", href: "/seoul/program/", accent: true },
           { label: "예약 전 확인", href: "/seoul/check/address/" },
         ]
-      ) + composeRegion(content, [...stations, ...relLifes]),
+      ) +
+      priceSection({ heading: `${life.name} 이용 코스와 요금` }) +
+      composeRegion(content, [...stations, ...relLifes]),
   });
 });
 
@@ -213,7 +221,9 @@ reg.STATIONS.forEach((st) => {
           { label: `${life.name} 생활권`, href: `/seoul/life/${life.slug}/`, accent: true },
           { label: "마사지 프로그램", href: "/seoul/program/" },
         ]
-      ) + composeRegion(content, related),
+      ) +
+      priceSection({ heading: `${st.name} 이용 코스와 요금` }) +
+      composeRegion(content, related),
   });
 });
 

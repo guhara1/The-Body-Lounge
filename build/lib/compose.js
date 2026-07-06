@@ -8,7 +8,7 @@ const {
   relatedChips,
   POLICY_NOTICE,
 } = require("./layout");
-const { esc } = require("./components");
+const { esc, heroImageBand } = require("./components");
 
 function paras(arr) {
   if (!arr) return "";
@@ -103,7 +103,8 @@ function regionHero(kicker, h1, lead, ctas) {
       <p class="lead">${esc(lead)}</p>
       ${cta ? `<div class="hero__cta">${cta}</div>` : ""}
     </div>
-  </div></section>`;
+  </div></section>
+  ${heroImageBand(h1)}`;
 }
 
 module.exports = { composeRegion, regionHero, sectionHead, paras, bullets };

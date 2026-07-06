@@ -3,7 +3,7 @@
 const { SITE } = require("../lib/site");
 const reg = require("./registry");
 const { maps } = reg;
-const { esc } = require("../lib/components");
+const { esc, heroImageBand } = require("../lib/components");
 const { ICONS } = require("../lib/icons");
 const {
   sectionHead,
@@ -15,6 +15,7 @@ const {
   POLICY_NOTICE,
 } = require("../lib/layout");
 const { regionHero } = require("../lib/compose");
+const { priceSection } = require("../lib/pricing");
 
 const HOME = { name: "서울", href: "/seoul/" };
 function descClamp(s) {
@@ -52,25 +53,6 @@ function main() {
     href: `/seoul/use/${u.slug}/`,
   }));
 
-  const prices = [
-    { tier: "60분 코스", amount: "90,000", dur: "60분", desc: "기본 컨디션·릴렉스 케어", tag: false },
-    { tier: "90분 코스", amount: "150,000", dur: "90분", desc: "아로마 포함 추천 구성", tag: true },
-    { tier: "120분 코스", amount: "180,000", dur: "120분", desc: "전신 집중 프리미엄 케어", tag: false },
-  ];
-  const priceHtml = prices
-    .map(
-      (p) => `
-    <div class="card ${p.tag ? "card--accent" : ""} price">
-      ${p.tag ? '<span class="tag">추천</span>' : ""}
-      <div class="tier">${p.tier}</div>
-      <div class="amount">${p.amount}<small>원</small></div>
-      <div class="dur">${p.dur}</div>
-      <div class="desc">${p.desc}</div>
-      <a class="btn ${p.tag ? "btn--accent" : "btn--outline-accent"} btn--block" href="${SITE.phoneHref}">예약 문의</a>
-    </div>`
-    )
-    .join("");
-
   const mainFaqs = [
     { q: "서울 전 지역 방문이 가능한가요?", a: "실제 방문 주소, 가까운 생활권, 예약 가능 시간, 이동 기준을 확인한 뒤 안내합니다." },
     { q: "서울은 구별로 찾는 것이 좋나요, 생활권으로 찾는 것이 좋나요?", a: "같은 구 안에서도 업무지구·주거지·숙소 인접권이 다르므로 구와 생활권을 함께 확인하는 것이 좋습니다." },
@@ -97,6 +79,7 @@ function main() {
       <span class="badge">불법·선정적 서비스 불가</span>
     </div>
   </div></div></section>
+  ${heroImageBand("서울 출장마사지 지역·프로그램 안내")}
 
   <section class="section--tight"><div class="container container--narrow"><div class="prose">
     <h2>서울은 지역명과 프로그램을 함께 확인해야 합니다</h2>
@@ -130,11 +113,7 @@ function main() {
     ${linkCards(useCards)}
   </div></section>
 
-  <section class="section"><div class="container">
-    ${sectionHead("요금 안내", "이용 코스와 요금 살펴보기", "60·90·120분 코스별 기준 요금이며, 지역·예약 시간대·이동 거리에 따라 상담 시 최종 확인됩니다.")}
-    <div class="price-grid">${priceHtml}</div>
-    <p class="center text-muted" style="margin-top:24px">지역·예약 시간대·이동 거리에 따라 상담 시 최종 확인됩니다. <a class="text-accent" href="/seoul/check/time/">상세 이용 기준 보기 →</a></p>
-  </div></section>
+  ${priceSection()}
 
   <section class="section--tight"><div class="container container--narrow">
     ${sectionHead("체크리스트", "예약 전 확인해야 할 내용")}
