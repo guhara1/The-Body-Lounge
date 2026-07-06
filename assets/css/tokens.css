@@ -1,0 +1,115 @@
+/* =====================================================================
+   간다GO — Design Tokens (Premium Palette)
+   Pretendard 기반. 기존 토큰 시스템을 프리미엄 팔레트로 교체.
+   Naming keeps prior token keys (--color-*, --space-*, --radius-*)
+   so existing components inherit the new palette without markup change.
+   ===================================================================== */
+
+@font-face {
+  font-family: "Pretendard Variable";
+  font-display: swap;
+  font-weight: 45 920;
+  font-style: normal;
+  src: local("Pretendard Variable");
+}
+
+:root {
+  /* ---- Brand / Accent (Orange, premium warm) ---------------------- */
+  --color-accent: #ff7a18;
+  --color-accent-strong: #ff6a00;
+  --color-accent-soft: #ff9d4d;
+  --color-accent-ink: #2a1400;
+  --gradient-accent: linear-gradient(135deg, #ff8a2b 0%, #ff6a00 55%, #f2560a 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #ff9d47 0%, #ff7a18 55%, #ff5e0a 100%);
+  --glow-accent: 0 10px 30px -8px rgba(255, 106, 0, 0.55);
+
+  /* ---- Premium gold hairline for elevated surfaces ---------------- */
+  --color-gold: #d9b57c;
+  --color-gold-soft: rgba(217, 181, 124, 0.32);
+
+  /* ---- Deep navy / charcoal base ---------------------------------- */
+  --color-bg: #0a0e18;
+  --color-bg-2: #0d1220;
+  --gradient-bg: radial-gradient(1200px 700px at 78% -8%, #16203a 0%, rgba(22, 32, 58, 0) 60%),
+    radial-gradient(900px 600px at 8% 6%, #131a2e 0%, rgba(19, 26, 46, 0) 55%),
+    linear-gradient(180deg, #0b1020 0%, #080b14 100%);
+
+  --color-surface: #121a2b;
+  --color-surface-2: #16203a;
+  --color-elevated: #1b2540;
+  --color-overlay: rgba(9, 13, 24, 0.72);
+
+  /* ---- Text --------------------------------------------------------- */
+  --color-text: #f3f6fd;
+  --color-text-soft: #c6d0e4;
+  --color-text-muted: #8f9cb8;
+  --color-text-faint: #66738f;
+  --color-text-on-accent: #1a0d00;
+
+  /* ---- Lines / borders --------------------------------------------- */
+  --color-border: rgba(148, 166, 204, 0.14);
+  --color-border-strong: rgba(148, 166, 204, 0.26);
+  --color-ring: rgba(255, 122, 24, 0.55);
+
+  /* ---- Feedback ---------------------------------------------------- */
+  --color-success: #34d399;
+  --color-warn: #fbbf24;
+  --color-danger: #f87171;
+
+  /* ---- Radius ------------------------------------------------------- */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ---- Spacing (8pt scale) ----------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---- Shadow / elevation ------------------------------------------ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 30px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 30px 60px -24px rgba(0, 0, 0, 0.7);
+
+  /* ---- Typography --------------------------------------------------- */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+
+  --fs-hero: clamp(2rem, 1.2rem + 3.4vw, 3.4rem);
+  --fs-h1: clamp(1.7rem, 1.1rem + 2.4vw, 2.6rem);
+  --fs-h2: clamp(1.35rem, 1.05rem + 1.3vw, 1.9rem);
+  --fs-h3: clamp(1.12rem, 1rem + 0.6vw, 1.35rem);
+  --fs-body: 1.02rem;
+  --fs-sm: 0.9rem;
+  --fs-xs: 0.8rem;
+  --lh-tight: 1.2;
+  --lh-body: 1.78;
+
+  /* ---- Layout ------------------------------------------------------- */
+  --container: 1140px;
+  --container-narrow: 820px;
+  --header-h: 66px;
+
+  /* ---- Motion ------------------------------------------------------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.25s;
+}
+
+/* Respect reduced-motion for all token-driven animation */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0.001s;
+  }
+}

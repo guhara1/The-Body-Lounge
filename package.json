@@ -1,0 +1,11 @@
+{
+  "name": "ganda-go",
+  "version": "1.0.0",
+  "private": true,
+  "description": "간다GO — 서울 출장마사지 지역·프로그램 안내 정적 사이트 (zero-dependency generator)",
+  "scripts": {
+    "build": "node build/build.js",
+    "check": "node build/build.js && node build/lint.js"
+  },
+  "license": "UNLICENSED"
+}
