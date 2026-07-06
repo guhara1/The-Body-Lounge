@@ -24,7 +24,7 @@ const SITE = {
   ogImageH: 630,
   // 16:9 hero banner shown directly below the hero box. Upload your image to
   // this repo path and it appears automatically (leave as-is to keep the path).
-  heroImage: "/assets/img/hero-16x9.jpg",
+  heroImage: "/assets/img/hero-16x9.webp",
   heroImageAlt: "간다GO 서울 출장마사지 안내",
 };
 
